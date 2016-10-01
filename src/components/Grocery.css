@@ -1,0 +1,19 @@
+.Grocery {
+  border: 1px solid rgb(91,126,154);
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding: 1em;
+}
+
+.Grocery h3 {
+  margin-top: 0;
+}
+
+.Grocery.purchased {
+  opacity: 0.5;
+}
+
+.Grocery.starred {
+  background-color: rgb(91,126,154);
+  color: rgb(160,182,196);
+}

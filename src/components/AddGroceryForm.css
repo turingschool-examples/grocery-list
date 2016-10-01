@@ -1,0 +1,31 @@
+.AddGroceryForm {
+  border: 1px solid rgb(91,126,154);
+  padding: 1em;
+  margin-bottom: 1em;
+}
+
+.AddGroceryForm label,
+.AddGroceryForm input,
+.AddGroceryForm textarea {
+  display: block;
+  width: 100%;
+  border: none;
+}
+
+.AddGroceryForm label {
+  font-size: 0.8em;
+  padding-bottom: 1em;
+}
+
+.AddGroceryForm label:not(:last-child) {
+  margin-bottom: 1em;
+}
+
+.AddGroceryForm input,
+.AddGroceryForm textarea {
+  padding-top: 0.8em;
+  padding-bottom: 0.8em;
+  background-color: rgb(200,222,236);
+}
+
+
