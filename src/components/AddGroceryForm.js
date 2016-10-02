@@ -57,10 +57,10 @@ class AddGrocery extends Component {
           />
         </label>
         <label>
-          Type
+          Notes
           <textarea
             name="notes"
-            placeholder="Type"
+            placeholder="Notes"
             value={this.state.notes}
             onChange={event => this.updateProperty(event)}
           />
@@ -75,6 +75,4 @@ class AddGrocery extends Component {
   }
 }
 
-const AddGroceryForm = connect()(AddGrocery);
-
-export default AddGroceryForm;
+export default connect()(AddGrocery);;

@@ -1,7 +1,7 @@
-const groceries = (state = [], action) => {
+export default function (state = [], action) {
   switch (action.type) {
     case 'ADD_GROCERY':
-      return [...state, action.item];
+      return [...state, Object.assign({}, action.item)];
 
     case 'PURCHASE_GROCERY':
       return state.map(item => {
@@ -25,5 +25,3 @@ const groceries = (state = [], action) => {
       return state;
   }
 }
-
-export default groceries;
