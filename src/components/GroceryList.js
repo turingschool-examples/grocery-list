@@ -11,6 +11,7 @@ const GroceryList = ({
   return (
     <section className="GroceryList">
       <button
+        className="GroceryList-clear"
         onClick={onClearGroceries}
         disabled={!groceries.length}
       >

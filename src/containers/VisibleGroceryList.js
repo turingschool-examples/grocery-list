@@ -24,31 +24,27 @@ const getVisibleGroceries = (groceries, filter) => {
 };
 
 const mapStateToProps = (state) => {
-  return {
-    groceries: getVisibleGroceries(state.groceries, state.visibilityFilter)
-  };
+  return { groceries: getVisibleGroceries(state.groceries, state.visibilityFilter) };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onPurchaseGrocery(id) {
-      dispatch(purchaseGrocery(id))
+      dispatch(purchaseGrocery(id));
     },
     onStarGrocery(id) {
-      dispatch(starGrocery(id))
+      dispatch(starGrocery(id));
     },
     onDeleteGrocery(id) {
-      dispatch(deleteGrocery(id))
+      dispatch(deleteGrocery(id));
     },
     onClearGroceries(id) {
-      dispatch(clearGroceries(id))
+      dispatch(clearGroceries(id));
     }
   };
 }
 
-const VisibleGroceryList = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(GroceryList);
-
-export default VisibleGroceryList;

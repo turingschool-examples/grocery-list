@@ -1,6 +1,7 @@
 import React from 'react';
 import VisibleGroceryList from '../containers/VisibleGroceryList';
-import AddGroceryForm from './AddGroceryForm';
+import AddGrocery from '../containers/AddGrocery';
+import FilterButtonsContainer from '../containers/FilterButtonsContainer';
 import './App.css';
 
 const App = () =>  {
@@ -9,8 +10,9 @@ const App = () =>  {
       <header className="App-header">
         <h1>Grocery List</h1>
       </header>
-      <AddGroceryForm/>
+      <AddGrocery />
       <VisibleGroceryList />
+      <FilterButtonsContainer />
     </div>
   );
 };

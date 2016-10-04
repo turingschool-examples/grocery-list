@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { addGrocery } from '../actions';
 
 import './AddGroceryForm.css';
 
-class AddGrocery extends Component {
+class AddGroceryForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,8 +19,7 @@ class AddGrocery extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    debugger;
-    this.props.dispatch(addGrocery(this.state));
+    this.props.submitGrocery(this.state);
     this.setState({
       name: '',
       quantity: '',
@@ -75,4 +72,4 @@ class AddGrocery extends Component {
   }
 }
 
-export default connect()(AddGrocery);;
+export default AddGroceryForm;
