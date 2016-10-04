@@ -32,4 +32,8 @@ const GroceryList = ({
   );
 };
 
+GroceryList.defaultProps = {
+  groceries: []
+};
+
 export default GroceryList;

@@ -21,9 +21,7 @@ describe('Clear Groceries', () => {
 
   it('has a button.Groceries-clear button which is disabled with no groceries', () => {
     const wrapper = shallow(
-      <GroceryList
-        groceries={[]}
-      />
+      <GroceryList />
     );
 
     expect(wrapper.find('.GroceryList-clear').prop('disabled')).toBe(true);
