@@ -45,7 +45,6 @@ class AddGroceryForm extends Component {
       }, updateGroceryList(groceries));
     })
     .catch(error => {
-      console.log("ERRORRRR", error);
       this.setState({
         errorStatus: 'Error adding grocery'
       })
