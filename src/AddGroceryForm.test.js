@@ -4,7 +4,7 @@ import fetchMock from 'fetch-mock';
 
 import AddGroceryForm from './AddGroceryForm';
 
-describe('App', () => {
+describe('AddGroceryForm', () => {
 
   const mockGroceries = [
     { id: 1489863729151, name: 'Pineapples', quantity: 10, purchased: false, starred: false },
