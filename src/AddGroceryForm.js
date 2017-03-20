@@ -30,7 +30,6 @@ class AddGroceryForm extends Component {
     })
     .then(response => response.json())
     .then(groceries => {
-      console.log("THIS: ", this);
       this.setState({
         name: '',
         quantity: ''
@@ -68,6 +67,7 @@ class AddGroceryForm extends Component {
         <input
           type="submit"
           value="Create Item"
+          id="submit"
           disabled={!this.state.name}
         />
       </form>

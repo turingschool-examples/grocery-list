@@ -19,19 +19,6 @@ describe('App', () => {
     fetchMock.restore();
   });
 
-  // it('gets groceries from the server', async (done) => {
-  //   fetchMock.get('/api/v1/groceries', { 
-  //     status: 200, 
-  //     body: { groceries: mockGroceries }
-  //   })
-    
-  //   const wrapper = mount(<App />);
-  //   await wrapper.update();
-
-  //   expect(wrapper.state('groceries')).toEqual(mockGroceries);
-
-  // });
-
   it('displays an error if there was a problem fetching groceries', async () => {
     fetchMock.get('/api/v1/groceries', { 
       status: 500
