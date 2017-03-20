@@ -18,7 +18,7 @@ describe('App', () => {
     expect(fetchMock.calls().unmatched).toEqual([]);
     fetchMock.restore();
   });
-
+  
   it('displays an error if there was a problem fetching groceries', async () => {
     fetchMock.get('/api/v1/groceries', { 
       status: 500

@@ -17,15 +17,13 @@ describe('App', () => {
     fetchMock.restore();
   });
 
-  it('submits the correct data when adding a new grocery', async () => {
+  it('submits the correct data when adding a new grocery', () => {
     fetchMock.post('/api/v1/groceries', { 
       status: 200,
-      body: {
-        groceries: mockGroceries
-      }
+      body: mockGroceries
     });
     
-    const wrapper = mount(<AddGroceryForm />);
+    const wrapper = mount(<AddGroceryForm updateGroceryList={jest.fn()} />);
 
     const nameInput = wrapper.find('input[name="name"]');
     const qtyInput = wrapper.find('input[name="quantity"]');
@@ -40,8 +38,6 @@ describe('App', () => {
     });
 
     formElem.simulate('submit');
-
-    await wrapper.update();
 
     expect(fetchMock.called()).toEqual(true);
     expect(fetchMock.lastUrl()).toEqual('/api/v1/groceries');

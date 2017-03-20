@@ -31,7 +31,7 @@ app.post('/api/v1/groceries', (request, response) => {
 
   grocery.id = grocery.id || Date.now();
   app.locals.groceries.push(grocery);
-  response.status(201).send({ groceries: app.locals.groceries });
+  response.status(201).send(app.locals.groceries);
 });
 
 app.put('/api/v1/groceries/:id', (request, response) => {

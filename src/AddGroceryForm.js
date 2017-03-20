@@ -6,20 +6,27 @@ class AddGroceryForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      quantity: ''
+      grocery: {
+        name: '',
+        quantity: '' 
+      },
+      errorStatus: ''
     };
   }
 
   updateProperty(event) {
     const { name, value } = event.target;
-    this.setState({ [name]: value });
+    this.setState({ 
+      grocery: Object.assign(this.state.grocery, {
+        [name]: value
+      })
+    });
   }
 
   addGrocery(event) {
     event.preventDefault();
     const { updateGroceryList } = this.props;
-    const grocery = this.state;
+    const grocery = this.state.grocery;
 
     fetch('/api/v1/groceries', {
       method: 'POST',
@@ -31,11 +38,18 @@ class AddGroceryForm extends Component {
     .then(response => response.json())
     .then(groceries => {
       this.setState({
-        name: '',
-        quantity: ''
+        grocery: {
+          name: '',
+          quantity: '' 
+        }
       }, updateGroceryList(groceries));
     })
-    .catch(error => console.log(error));
+    .catch(error => {
+      console.log("ERRORRRR", error);
+      this.setState({
+        errorStatus: 'Error adding grocery'
+      })
+    });
   }
 
   render() {
@@ -68,7 +82,7 @@ class AddGroceryForm extends Component {
           type="submit"
           value="Create Item"
           id="submit"
-          disabled={!this.state.name}
+          disabled={!this.state.grocery.name}
         />
       </form>
     );
