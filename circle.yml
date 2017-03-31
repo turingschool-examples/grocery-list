@@ -1,0 +1,11 @@
+machine:
+  timezone:
+    America/New_York
+
+  node:
+    version: 7.0.0
+
+test:
+  override:
+    - npm run lint
+    - npm run test
