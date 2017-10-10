@@ -26,7 +26,8 @@ class App extends Component {
         }
         else {
           response.json().then(data => {
-            this.setState({groceries: data.groceries})
+            console.log('data ', data)
+            this.setState({ groceries: data.groceries }, () => console.log('state ', this.state.groceries))
           });
         }
       })
