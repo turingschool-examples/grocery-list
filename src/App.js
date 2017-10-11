@@ -26,10 +26,11 @@ class App extends Component {
         }
         else {
           response.json().then(data => {
-            this.setState({groceries: data.groceries})
+            this.setState({ groceries: data.groceries })
           });
         }
       })
+      .catch(err => console.log('err ', err))
   }
 
   updateGroceryList(groceries) {
