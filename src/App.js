@@ -4,6 +4,7 @@ import './App.css';
 import GroceryList from './GroceryList'
 import Grocery from './Grocery'
 import AddGroceryForm from './AddGroceryForm'
+import { fetchGroceries } from './apiCalls'
 
 class App extends Component {
   constructor() {
@@ -16,20 +17,13 @@ class App extends Component {
     this.updateGroceryList = this.updateGroceryList.bind(this);
   }
 
-  componentDidMount() {
-    fetch('/api/v1/groceries')
-      .then(response => {
-        if (response.status >= 400) {
-          this.setState({
-            errorStatus: 'Error fetching groceries'
-          });
-        }
-        else {
-          response.json().then(data => {
-            this.setState({groceries: data.groceries})
-          });
-        }
-      })
+  async componentDidMount() {
+    try {
+      const data = await fetchGroceries()
+      this.setState({groceries: data.groceries})
+    } catch(err) {
+      this.setState({errorStatus: err.message})
+    }
   }
 
   updateGroceryList(groceries) {

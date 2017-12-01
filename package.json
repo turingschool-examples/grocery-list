@@ -4,9 +4,11 @@
   "private": true,
   "devDependencies": {
     "babel-plugin-transform-async-to-generator": "^6.22.0",
-    "enzyme": "^2.7.1",
+    "enzyme": "^3.2.0",
+    "enzyme-adapter-react-15": "^1.0.5",
     "react-addons-test-utils": "^15.4.2",
-    "react-scripts": "0.9.5"
+    "react-scripts": "1.0.7",
+    "react-test-renderer": "^15.6.2"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
