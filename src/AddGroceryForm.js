@@ -23,7 +23,7 @@ class AddGroceryForm extends Component {
     });
   }
 
-  addGrocery(event) {
+  handleAddGrocery(event) {
     event.preventDefault();
     const { updateGroceryList } = this.props;
     const grocery = this.state.grocery;
@@ -55,7 +55,7 @@ class AddGroceryForm extends Component {
     return (
       <form
         className="AddGroceryForm"
-        onSubmit={event => this.addGrocery(event)}
+        onSubmit={event => this.handleAddGrocery(event)}
       >
         <label>
           Name
