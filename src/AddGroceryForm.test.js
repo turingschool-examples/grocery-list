@@ -41,47 +41,29 @@ describe('AddGroceryForm', () => {
     expect(window.fetch).toHaveBeenCalledWith(...expectedParams)
   })
 
-  it('should set state correct after we have digested the fetch', () => {
+  it('should set state correct after we have digested the fetch', async () => {
     renderedComponent.setState({grocery: mockGrocery})
 
-    Promise.resolve( 
-      renderedComponent.instance().handleAddGrocery(mockEvent)
-    )
-    .then(() => {
-      renderedComponent.update()
-    })
-    .then(() => {
-      expect(renderedComponent.state('grocery')).toEqual({name: '', quantity: ''})
-    })
+    await renderedComponent.instance().handleAddGrocery(mockEvent)
+    await renderedComponent.update()
+    expect(renderedComponent.state('grocery')).toEqual({name: '', quantity: ''})
   })
 
-  it('should call our updateGroceryList callback after fetch', () => {
+  it('should call our updateGroceryList callback after fetch', async () => {
     renderedComponent.setState({grocery: mockGrocery})
 
-    Promise.resolve(
-      renderedComponent.instance().handleAddGrocery(mockEvent)
-    )
-    .then(() => {
-      renderedComponent.update()
-    })
-    .then(() => {
-      expect(mockUpdateGroceryList).toHaveBeenCalledWith({ groceries: mockGroceries})
-    })
+    await renderedComponent.instance().handleAddGrocery(mockEvent)
+    await renderedComponent.update()
+    expect(mockUpdateGroceryList).toHaveBeenCalledWith({ groceries: mockGroceries})
   })
 
-  it('set the error status if the fetch fails', () => {
+  it('set the error status if the fetch fails', async () => {
     window.fetch = jest.fn().mockImplementation(() => Promise.reject(
       new Error('it failed')
     ))
 
-    Promise.resolve(
-      renderedComponent.instance().handleAddGrocery(mockEvent)
-    )
-    .then(() => {
-      renderedComponent.update()
-    })
-    .then(() => {
-      expect(renderedComponent.state('errorStatus')).toEqual('Error adding grocery')
-    })
+    await renderedComponent.instance().handleAddGrocery(mockEvent)
+    await renderedComponent.update()
+    expect(renderedComponent.state('errorStatus')).toEqual('Error adding grocery')
   })
 })
