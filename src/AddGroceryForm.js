@@ -23,39 +23,38 @@ class AddGroceryForm extends Component {
     });
   }
 
-  handleAddGrocery(event) {
+  handleAddGrocery = async (event) => {
     event.preventDefault();
     const { updateGroceryList } = this.props;
     const grocery = this.state.grocery;
 
-    fetch('/api/v1/groceries', {
-      method: 'POST',
-      body: JSON.stringify({ grocery }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(response => response.json())
-    .then(groceries => {
+    try {
+      const response = await fetch('/api/v1/groceries', {
+        method: 'POST',
+        body: JSON.stringify({ grocery }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      const groceries = await response.json()
       this.setState({
         grocery: {
           name: '',
-          quantity: '' 
+          quantity: ''
         }
-      }, updateGroceryList(groceries));
-    })
-    .catch(error => {
+      }, updateGroceryList(groceries))
+    } catch(error) {
       this.setState({
-        errorStatus: 'Error adding grocery'
+        errorStatus: error.message
       })
-    });
+    }
   }
 
   render() {
     return (
       <form
         className="AddGroceryForm"
-        onSubmit={event => this.handleAddGrocery(event)}
+        onSubmit={this.handleAddGrocery}
       >
         <label>
           Name
