@@ -52,33 +52,32 @@ describe('AddGroceryForm', () => {
       const expected = { name: '', quantity: '' }
 
       // Execution
-      Promise.resolve(wrapper.instance().handleAddGrocery(mockEvent))
-        .then(() => wrapper.update())
-        // Expectation
-        .then(() => expect(wrapper.state('grocery')).toEqual(expected))
+      await wrapper.instance().handleAddGrocery(mockEvent)
+      
+      // Expectation
+      expect(wrapper.state('grocery')).toEqual(expected)
     })
 
-    it('should call updateGroceryList prop with the correct params', () => {
+    it('should call updateGroceryList prop with the correct params', async () => {
       // Setup
       const expected = mockGroceries
 
       // Execution
-      Promise.resolve(wrapper.instance().handleAddGrocery(mockEvent))
-        .then(() => wrapper.update())
-        // Expectation
-        .then(() => expect(mockUpdateGroceryList).toHaveBeenCalledWith(expected))
+      await wrapper.instance().handleAddGrocery(mockEvent)
+      
+      // Expectation
+      expect(mockUpdateGroceryList).toHaveBeenCalledWith(expected)
     })
 
-    it('should update state with errorStatus if something goes wrong', () => {
+    it('should update state with errorStatus if something goes wrong', async () => {
       // Setup
       window.fetch = jest.fn().mockImplementation(() => Promise.reject(new Error('failed')))
 
       // Execution
-      Promise.resolve(wrapper.instance().handleAddGrocery(mockEvent))
-        .then(() => wrapper.update())
-        .then(() => wrapper.update())
-        // Expectation
-        .then(() => expect(wrapper.state('errorStatus')).toEqual('failed'))
+      await wrapper.instance().handleAddGrocery(mockEvent)
+
+      // Expectation
+      expect(wrapper.state('errorStatus')).toEqual('failed')
     })
   })
 })
