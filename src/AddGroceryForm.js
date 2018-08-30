@@ -8,7 +8,7 @@ class AddGroceryForm extends Component {
     this.state = {
       grocery: {
         name: '',
-        quantity: '' 
+        quantity: ''
       },
       errorStatus: ''
     };
@@ -16,7 +16,7 @@ class AddGroceryForm extends Component {
 
   updateProperty(event) {
     const { name, value } = event.target;
-    this.setState({ 
+    this.setState({
       grocery: Object.assign(this.state.grocery, {
         [name]: value
       })
@@ -35,16 +35,19 @@ class AddGroceryForm extends Component {
         headers: {
           'Content-Type': 'application/json'
         }
-      })
-      const groceries = await response.json()
-      this.setState({
-        grocery: {
-          name: '',
-          quantity: '' 
-        }
-      }, updateGroceryList(groceries))
-    } catch(error) {
-      this.setState({errorStatus: error.message})
+      });
+      const groceries = await response.json();
+      this.setState(
+        {
+          grocery: {
+            name: '',
+            quantity: ''
+          }
+        },
+        updateGroceryList(groceries)
+      );
+    } catch (error) {
+      this.setState({ errorStatus: error.message });
     }
   }
 
