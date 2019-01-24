@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 
 import GroceryList from './GroceryList'
-import Grocery from './Grocery'
 import AddGroceryForm from './AddGroceryForm'
 
 class App extends Component {
