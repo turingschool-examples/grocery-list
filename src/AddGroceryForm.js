@@ -26,7 +26,7 @@ class AddGroceryForm extends Component {
   handleAddGrocery(event) {
     event.preventDefault();
     const { updateGroceryList } = this.props;
-    const grocery = this.state.grocery;
+    const { grocery } = this.state;
 
     fetch('/api/v1/groceries', {
       method: 'POST',
@@ -52,6 +52,7 @@ class AddGroceryForm extends Component {
   }
 
   render() {
+    const { grocery } = this.state;
     return (
       <form
         className="AddGroceryForm"
@@ -63,7 +64,7 @@ class AddGroceryForm extends Component {
             type="text"
             name="name"
             placeholder="Name"
-            value={this.state.name}
+            value={grocery.name}
             onChange={event => this.updateProperty(event)}
           />
         </label>
@@ -73,7 +74,7 @@ class AddGroceryForm extends Component {
             type="text"
             name="quantity"
             placeholder="Quantity"
-            value={this.state.quantity}
+            value={grocery.quantity}
             onChange={event => this.updateProperty(event)}
           />
         </label>
@@ -81,7 +82,7 @@ class AddGroceryForm extends Component {
           type="submit"
           value="Create Item"
           id="submit"
-          disabled={!this.state.grocery.name}
+          disabled={!grocery.name}
         />
       </form>
     );
