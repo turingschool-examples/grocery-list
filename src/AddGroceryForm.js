@@ -26,32 +26,31 @@ class AddGroceryForm extends Component {
   // consuming api
   // requesting data (sometimes sending it too) given a response
 
-  handleAddGrocery(event) {
+  async handleAddGrocery(event) {
     event.preventDefault();
     const { updateGroceryList } = this.props;
     const { grocery } = this.state;
-
-    return fetch('/api/v1/groceries', {
-      method: 'POST',
-      body: JSON.stringify({ grocery }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(response => response.json())
-    .then(groceries => {
-      this.setState({
+    try {
+      const response = await fetch('/api/v1/groceries', {
+        method: 'POST',
+        body: JSON.stringify({ grocery }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      const groceries = await response.json();
+      await this.setState({
         grocery: {
           name: '',
           quantity: '' 
         }
-      }, updateGroceryList(groceries));
-    })
-    .catch(error => {
+      })
+      updateGroceryList(groceries);
+    } catch (error) {
       this.setState({
         errorStatus: error.message,
       })
-    });
+    };
   }
 
   render() {
