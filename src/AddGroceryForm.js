@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { addGrocery } from './Api';
 
 import './AddGroceryForm.css';
 
@@ -23,22 +24,12 @@ class AddGroceryForm extends Component {
     });
   }
 
-  // consuming api
-  // requesting data (sometimes sending it too) given a response
-
   async handleAddGrocery(event) {
     event.preventDefault();
     const { updateGroceryList } = this.props;
     const { grocery } = this.state;
     try {
-      const response = await fetch('/api/v1/groceries', {
-        method: 'POST',
-        body: JSON.stringify({ grocery }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      const groceries = await response.json();
+      const groceries = await addGrocery(grocery);
       await this.setState({
         grocery: {
           name: '',

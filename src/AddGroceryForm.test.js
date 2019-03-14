@@ -1,6 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import AddGroceryForm from './AddGroceryForm';
+import { addGrocery } from './Api';
+jest.mock('./Api');
 
 describe('AddGroceryForm', () => {
   describe('handleAddGrocery', () => {
@@ -17,33 +19,11 @@ describe('AddGroceryForm', () => {
         { name: 'burritos', quantity: '20' },
         { name: 'carrots', quantity: '15' },
       ];
-      fetch = jest.fn().mockImplementation(() => Promise.resolve({
-        status: 200,
-        json: () => Promise.resolve(mockGroceries),
-      }));
       mockUpdateGroceryList = jest.fn();
       wrapper = shallow(<AddGroceryForm 
         updateGroceryList={mockUpdateGroceryList}
       />);
-    });
-
-    it('calls fetch with the correct url and options', () => {
-      // setup
-      const expectedUrl = '/api/v1/groceries';
-      const expectedOptions = {
-        method: 'POST',
-        body: JSON.stringify({ grocery: mockGrocery }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      };
-
-      // execution
-      wrapper.setState({ grocery: mockGrocery });
-      wrapper.instance().handleAddGrocery(mockEvent);
-
-      // expectation
-      expect(fetch).toHaveBeenCalledWith(expectedUrl, expectedOptions);
+      addGrocery.mockImplementation(() => mockGroceries);
     });
 
     it('resets state on a successful request', async () => {
@@ -53,6 +33,7 @@ describe('AddGroceryForm', () => {
       // execution
       wrapper.setState({ grocery: mockGrocery });
       await wrapper.instance().handleAddGrocery(mockEvent);
+
       // expectation
       expect(wrapper.state('grocery')).toEqual(expectedState);
     });
@@ -66,14 +47,14 @@ describe('AddGroceryForm', () => {
 
     it('sets an error if fetch fails', async () => {
       // setup 
-      fetch = jest.fn().mockImplementationOnce(() => Promise.reject(
-        new Error('The fetch failed.')
-      ));
+      addGrocery.mockImplementationOnce(() => {
+        throw new Error('Status 404 returned from the server.');
+      });
 
       // exectution 
       await wrapper.instance().handleAddGrocery(mockEvent);
       // expectation
-      expect(wrapper.state('errorStatus')).toBe('The fetch failed.');
+      expect(wrapper.state('errorStatus')).toBe('Status 404 returned from the server.');
     });
   });
 });
