@@ -23,12 +23,15 @@ class AddGroceryForm extends Component {
     });
   }
 
+  // consuming api
+  // requesting data (sometimes sending it too) given a response
+
   handleAddGrocery(event) {
     event.preventDefault();
     const { updateGroceryList } = this.props;
     const { grocery } = this.state;
 
-    fetch('/api/v1/groceries', {
+    return fetch('/api/v1/groceries', {
       method: 'POST',
       body: JSON.stringify({ grocery }),
       headers: {
@@ -46,7 +49,7 @@ class AddGroceryForm extends Component {
     })
     .catch(error => {
       this.setState({
-        errorStatus: 'Error adding grocery'
+        errorStatus: error.message,
       })
     });
   }
