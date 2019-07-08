@@ -1,9 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import AddGroceryForm from './AddGroceryForm';
-import { addGrocery } from './apiCalls';
-
-jest.mock('./apiCalls');
 
 describe('AddGroceryForm', () => {
   let mockEvent;
@@ -11,10 +8,6 @@ describe('AddGroceryForm', () => {
   let mockGroceries;
   let mockUpdateGroceryList;
   let wrapper;
-
-  beforeAll(() => {
-    addGrocery.mockImplementation(() => mockGroceries);
-  })
 
   beforeEach(() => {
     mockEvent = { preventDefault: jest.fn() };
@@ -28,6 +21,32 @@ describe('AddGroceryForm', () => {
     wrapper = shallow(
       <AddGroceryForm updateGroceryList={mockUpdateGroceryList} />
     );
+
+    window.fetch = jest.fn().mockImplementation(() => {
+      return Promise.resolve(
+        { json: () => Promise.resolve(mockGroceries) }
+      )
+    })
+  });
+
+  it('calls fetch with the correct data when adding a new grocery', () => {
+    const url = '/api/v1/groceries';
+    const options = {
+      // set up
+      method: 'POST',
+      body: JSON.stringify({ grocery: mockGrocery }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+
+    wrapper.setState({ grocery: mockGrocery });
+
+    // execution
+    wrapper.instance().handleAddGrocery(mockEvent);
+
+    // expectation
+    expect(window.fetch).toHaveBeenCalledWith(url, options);
   });
 
   it('resets the state after adding a new grocery', async () => {
@@ -46,12 +65,14 @@ describe('AddGroceryForm', () => {
   });
 
   it('sets error in state if the fetch fails', async () => {
-    addGrocery.mockImplementationOnce(() => {
-      throw new Error('another error')
+    window.fetch = jest.fn().mockImplementationOnce(() => {
+      return Promise.reject(
+        new Error('Fetch failed')
+      )
     });
 
     await wrapper.instance().handleAddGrocery(mockEvent)
 
-    expect(wrapper.state('errorStatus')).toEqual('Error adding grocery');
+    expect(wrapper.state('errorStatus')).toEqual('Error adding grocery')
   });
 })

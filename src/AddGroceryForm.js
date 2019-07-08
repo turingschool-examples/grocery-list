@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { addGrocery } from './apiCalls';
+
 import './AddGroceryForm.css';
 
 class AddGroceryForm extends Component {
@@ -29,8 +29,14 @@ class AddGroceryForm extends Component {
     const { grocery } = this.state;
 
     try {
-      const groceries = await addGrocery(grocery);
-
+      const response = await fetch('/api/v1/groceries', {
+        method: 'POST',
+        body: JSON.stringify({ grocery }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      const groceries = await response.json()
       this.setState({
         grocery: {
           name: '',
@@ -38,8 +44,11 @@ class AddGroceryForm extends Component {
         }
       }, updateGroceryList(groceries));
     } catch (error) {
-      this.setState({ errorStatus: 'Error adding grocery' });
-    }
+      this.setState({
+        errorStatus: 'Error adding grocery'
+      })
+    };
+
   }
 
   render() {
