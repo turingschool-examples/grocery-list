@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { addGrocery } from './apiCalls';
 import './AddGroceryForm.css';
 
 class AddGroceryForm extends Component {
@@ -8,7 +8,7 @@ class AddGroceryForm extends Component {
     this.state = {
       grocery: {
         name: '',
-        quantity: '' 
+        quantity: ''
       },
       errorStatus: ''
     };
@@ -16,39 +16,30 @@ class AddGroceryForm extends Component {
 
   updateProperty(event) {
     const { name, value } = event.target;
-    this.setState({ 
+    this.setState({
       grocery: Object.assign(this.state.grocery, {
         [name]: value
       })
     });
   }
 
-  handleAddGrocery(event) {
+  async handleAddGrocery(event) {
     event.preventDefault();
     const { updateGroceryList } = this.props;
     const { grocery } = this.state;
 
-    fetch('/api/v1/groceries', {
-      method: 'POST',
-      body: JSON.stringify({ grocery }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(response => response.json())
-    .then(groceries => {
+    try {
+      const groceries = await addGrocery(grocery);
+
       this.setState({
         grocery: {
           name: '',
-          quantity: '' 
+          quantity: ''
         }
       }, updateGroceryList(groceries));
-    })
-    .catch(error => {
-      this.setState({
-        errorStatus: 'Error adding grocery'
-      })
-    });
+    } catch (error) {
+      this.setState({ errorStatus: 'Error adding grocery' });
+    }
   }
 
   render() {
