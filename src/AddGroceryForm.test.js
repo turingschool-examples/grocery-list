@@ -49,30 +49,30 @@ describe('AddGroceryForm', () => {
     expect(window.fetch).toHaveBeenCalledWith(url, options);
   });
 
-  it('resets the state after adding a new grocery', async () => {
+  it('resets the state after adding a new grocery', () => {
     const expected = { name: '', quantity: '' };
     wrapper.setState({ grocery: mockGrocery });
 
-    await wrapper.instance().handleAddGrocery(mockEvent);
-
-    expect(wrapper.state('grocery')).toEqual(expected);
+    wrapper.instance().handleAddGrocery(mockEvent).then(() => {
+      expect(wrapper.state('grocery')).toEqual(expected);
+    });
   });
 
-  it('calls the updateGroceryList callback after adding a new grocery', async () => {
-    await wrapper.instance().handleAddGrocery(mockEvent);
-
-    expect(mockUpdateGroceryList).toHaveBeenCalledWith(mockGroceries);
+  it('calls the updateGroceryList callback after adding a new grocery', () => {
+    wrapper.instance().handleAddGrocery(mockEvent).then(() => {
+      expect(mockUpdateGroceryList).toHaveBeenCalledWith(mockGroceries);
+    });
   });
 
-  it('sets error in state if the fetch fails', async () => {
+  it('sets error in state if the fetch fails', () => {
     window.fetch = jest.fn().mockImplementationOnce(() => {
       return Promise.reject(
         new Error('Fetch failed')
       )
     });
 
-    await wrapper.instance().handleAddGrocery(mockEvent)
-
-    expect(wrapper.state('errorStatus')).toEqual('Error adding grocery')
+    wrapper.instance().handleAddGrocery(mockEvent).then(() => {
+      expect(wrapper.state('errorStatus')).toEqual('Error adding grocery')
+    });
   });
 })
